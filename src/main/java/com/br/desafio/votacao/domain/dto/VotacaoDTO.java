@@ -16,5 +16,5 @@ public class VotacaoDTO {
 
     private Long idAssociado;
     private Long idPauta;
-    private VotoEnum votoEnum;
+    private Character votoEnum;
 }

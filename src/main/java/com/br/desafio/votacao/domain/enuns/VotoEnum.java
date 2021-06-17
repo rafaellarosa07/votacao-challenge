@@ -1,6 +1,8 @@
 package com.br.desafio.votacao.domain.enuns;
 
-public enum VotoEnum {
+import java.io.Serializable;
+
+public enum VotoEnum implements Serializable {
     SIM("S"), NÃO("N");
 
     private String voto;

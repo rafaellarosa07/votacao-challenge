@@ -31,7 +31,7 @@ public class AssociadoSessao implements Serializable {
     private Sessao sessao;
 
     @Column(name = "VOTO")
-    private VotoEnum voto;
+    private Character voto;
 
 
 
