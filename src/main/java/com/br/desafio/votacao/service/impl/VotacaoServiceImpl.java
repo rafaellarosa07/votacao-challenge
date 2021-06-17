@@ -2,6 +2,7 @@ package com.br.desafio.votacao.service.impl;
 
 import com.br.desafio.votacao.domain.Associado;
 import com.br.desafio.votacao.domain.AssociadoSessao;
+import com.br.desafio.votacao.domain.Sessao;
 import com.br.desafio.votacao.domain.dto.Mensagem;
 import com.br.desafio.votacao.domain.dto.ValidacaoCpfDTO;
 import com.br.desafio.votacao.domain.dto.VotacaoDTO;
@@ -43,11 +44,7 @@ public class VotacaoServiceImpl implements VotacaoService {
             if(validacao.getStatus().equals(StatusCPFEnum.VALIDO)) {
                 var sessao = sessaoService.getSessaoAbertaIdPauta(votacaoDTO.getIdPauta());
                 if (!ObjectUtils.isEmpty(sessao)) {
-                    var associadoSessao = new AssociadoSessao();
-                    associadoSessao.setSessao(sessao);
-                    associadoSessao.setAssociado((Associado) associadoService.buscarPorId(votacaoDTO.getIdAssociado()).getBody());
-                    associadoSessao.setVoto(votacaoDTO.getVotoEnum());
-                    associadoSessaoService.cadastrar(associadoSessao);
+                        preencherAssociadoSessao(sessao, votacaoDTO);
                     return new ResponseEntity<>(new Mensagem("Voto Realizado!", 0L, "success", true),
                             HttpStatus.OK);
                 }
@@ -60,6 +57,14 @@ public class VotacaoServiceImpl implements VotacaoService {
             return new ResponseEntity<>(new Mensagem("Ocorreu um erro ao tentar cadastrar a pauta!", 0L, "error", true),
                     HttpStatus.BAD_REQUEST);
         }
+    }
+
+    private void preencherAssociadoSessao(Sessao sessao, VotacaoDTO votacaoDTO) throws Exception {
+        var associadoSessao = new AssociadoSessao();
+        associadoSessao.setSessao(sessao);
+        associadoSessao.setAssociado((Associado) associadoService.buscarPorId(votacaoDTO.getIdAssociado()).getBody());
+        associadoSessao.setVoto(votacaoDTO.getVotoEnum());
+        associadoSessaoService.cadastrar(associadoSessao);
     }
 
     private static ValidacaoCpfDTO validateCPF(String cpf)
