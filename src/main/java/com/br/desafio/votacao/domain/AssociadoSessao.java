@@ -18,11 +18,14 @@ import java.io.Serializable;
 public class AssociadoSessao implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(columnDefinition = "ID")
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "ASSOCIADO_ID", referencedColumnName = "ID")
     private Associado associado;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "SESSAO_ID", referencedColumnName = "ID")
     private Sessao sessao;

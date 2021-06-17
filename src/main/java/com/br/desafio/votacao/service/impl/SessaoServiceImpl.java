@@ -51,7 +51,7 @@ public class SessaoServiceImpl extends ConvertModelToDTO implements SessaoServic
 
     @Override
     public Sessao getSessaoAbertaIdPauta(Long idPauta) {
-        return sessaoRepository.findByPauta_IdAndDataInicioBeforeAndDataFimAfter(idPauta, LocalDateTime.now(), LocalDateTime.now());
+        return sessaoRepository.findByPautIdAndData(idPauta, LocalDateTime.now());
     }
 
 }
