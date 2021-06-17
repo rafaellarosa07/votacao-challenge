@@ -17,7 +17,6 @@ public class ItemPautaDTO {
 
     private Long id;
     private String nome;
-    private Pauta pauta;
 
 
     public ItemPauta paraEntidade() {
@@ -25,7 +24,6 @@ public class ItemPautaDTO {
         return ItemPauta.builder()
                 .id(this.id)
                 .nome(this.nome)
-                .pauta(this.pauta)
                 .build();
     }
 

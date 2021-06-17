@@ -29,5 +29,10 @@ public class SessaoController {
         return sessaoService.listarTodosPaginado(pageable);
     }
 
+    @PostMapping
+    public ResponseEntity<?> abrir(@RequestBody SessaoDTO sessao) {
+        return sessaoService.abrir(sessao);
+    }
+
 
 }

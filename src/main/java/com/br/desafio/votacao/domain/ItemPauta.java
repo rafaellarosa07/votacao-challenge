@@ -25,7 +25,7 @@ public class ItemPauta implements Serializable {
     @Column(name = "NOME")
     private String nome;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "FK_PAUTA", referencedColumnName = "ID")
     private Pauta pauta;
 

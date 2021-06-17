@@ -1,6 +1,7 @@
 package com.br.desafio.votacao.service;
 
 
+import com.br.desafio.votacao.domain.ItemPauta;
 import com.br.desafio.votacao.domain.dto.ItemPautaDTO;
 import com.br.desafio.votacao.domain.dto.PautaDTO;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,7 @@ public interface ItemPautaService {
 
     ResponseEntity<?> cadastrar(ItemPautaDTO produto);
 
-    ResponseEntity<?> cadastrarList(List<ItemPautaDTO> produto);
+    ResponseEntity<?> cadastrarList(List<ItemPauta> produto);
 
     ResponseEntity<?> buscarPorId(Long id) throws Exception;
 

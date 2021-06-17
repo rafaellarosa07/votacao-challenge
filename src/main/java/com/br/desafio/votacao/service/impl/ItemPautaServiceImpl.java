@@ -54,10 +54,10 @@ public class ItemPautaServiceImpl extends ConvertModelToDTO implements ItemPauta
     }
 
     @Override
-    public ResponseEntity<?> cadastrarList(List<ItemPautaDTO> itensPautas) {
+    public ResponseEntity<?> cadastrarList(List<ItemPauta> itensPautas) {
         try {
 
-            itemPautaRepository.saveAll(itensPautas.stream().map(item -> super.toModel(item, ItemPauta.class)).collect(Collectors.toList()));
+            itemPautaRepository.saveAll(itensPautas);
 
 
             return new ResponseEntity<>(new Mensagem("Item Pauta cadastrada com sucesso!", 0L, "success", true),

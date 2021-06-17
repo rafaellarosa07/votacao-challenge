@@ -1,20 +1,26 @@
 package com.br.desafio.votacao.service.impl;
 
+import com.br.desafio.votacao.domain.ItemPauta;
 import com.br.desafio.votacao.domain.Pauta;
+import com.br.desafio.votacao.domain.dto.ItemPautaDTO;
 import com.br.desafio.votacao.domain.dto.Mensagem;
 import com.br.desafio.votacao.domain.dto.PautaDTO;
 import com.br.desafio.votacao.repository.PautaRepository;
 import com.br.desafio.votacao.service.ItemPautaService;
 import com.br.desafio.votacao.service.PautaService;
+import com.br.desafio.votacao.util.ConvertModelToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
-public class PautaServiceImpl implements PautaService {
+public class PautaServiceImpl extends ConvertModelToDTO implements PautaService {
 
     private final PautaRepository pautaRepository;
 
@@ -37,10 +43,16 @@ public class PautaServiceImpl implements PautaService {
     }
 
     @Override
-    public ResponseEntity<?> cadastrar(PautaDTO pauta) {
+    public ResponseEntity<?> cadastrar(PautaDTO pautaDTO) {
         try {
-            pautaRepository.save(pauta.paraEntidade());
-            itemPautaService.cadastrarList(pauta.getItensPauta());
+            Pauta pauta = pautaDTO.paraEntidade();
+            List<ItemPauta> itensPautas = pautaDTO.getItensPauta().stream().map(iPauta -> {
+                var itemPauta =  super.toModel(iPauta, ItemPauta.class);
+                itemPauta.setPauta(pauta);
+                return itemPauta;
+            }).collect(Collectors.toList());
+            pautaRepository.save(pauta);
+            itemPautaService.cadastrarList(itensPautas);
 
             return new ResponseEntity<>(new Mensagem("Pauta cadastrada com sucesso!", 0L, "success", true),
                     HttpStatus.CREATED);

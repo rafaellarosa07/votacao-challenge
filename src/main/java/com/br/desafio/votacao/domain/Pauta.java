@@ -27,7 +27,4 @@ public class Pauta  implements Serializable {
 
     @Column(name = "DATA_CRIACAO")
     private LocalDateTime dataCriacao;
-
-
-
 }
